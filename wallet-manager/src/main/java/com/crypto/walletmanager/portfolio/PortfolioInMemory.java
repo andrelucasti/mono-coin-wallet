@@ -1,8 +1,11 @@
 package com.crypto.walletmanager.portfolio;
 
+import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class PortfolioInMemory implements PortfolioDAO {
 
     private  final List<Portfolio> memory;

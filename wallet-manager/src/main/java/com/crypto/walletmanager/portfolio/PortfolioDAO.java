@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface PortfolioDAO {
     List<Portfolio> findAll();
-    void save(Portfolio portfolio);
+    Portfolio save(Portfolio portfolio);
 }

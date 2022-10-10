@@ -10,7 +10,7 @@ public class CreatePortfolio {
         this.portfolioDAO = portfolioDAO;
     }
 
-    public void execute(Portfolio portfolio){
-        portfolioDAO.save(portfolio);
+    public Portfolio execute(Portfolio portfolio){
+        return portfolioDAO.save(portfolio);
     }
 }

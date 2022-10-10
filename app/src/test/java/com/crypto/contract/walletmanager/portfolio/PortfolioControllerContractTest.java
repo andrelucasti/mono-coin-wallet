@@ -27,7 +27,7 @@ class PortfolioControllerContractTest extends AppApplicationTests {
                 .post("/portfolio")
                 .then()
                 .status(HttpStatus.CREATED)
-                .body(Matchers.hasProperty("name"), Matchers.containsString("Token Wallet"))
-                .body(Matchers.hasProperty("userId"), Matchers.hasValue(userId.toString()));
+                .body(Matchers.containsString("name"), Matchers.containsString("Token Wallet"))
+                .body(Matchers.containsString("userId"), Matchers.containsString(userId.toString()));
     }
 }

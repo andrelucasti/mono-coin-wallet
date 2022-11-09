@@ -1,2 +1,12 @@
 server:
   port: 9958
+
+spring:
+  application:
+    name: "coin-wallet"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

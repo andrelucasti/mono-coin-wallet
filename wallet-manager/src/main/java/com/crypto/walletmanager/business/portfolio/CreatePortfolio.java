@@ -1,4 +1,4 @@
-package com.crypto.walletmanager.portfolio;
+package com.crypto.walletmanager.business.portfolio;
 
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ public class CreatePortfolio {
         this.portfolioDAO = portfolioDAO;
     }
 
-    public Portfolio execute(Portfolio portfolio){
-        return portfolioDAO.save(portfolio);
+    public void execute(Portfolio portfolio){
+        portfolioDAO.save(portfolio);
     }
 }

@@ -1,0 +1,6 @@
+scrape_configs:
+    - job_name: 'coin-wallet'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: '10s'
+      static_configs:
+          - targets: ['192.168.1.184:9958']

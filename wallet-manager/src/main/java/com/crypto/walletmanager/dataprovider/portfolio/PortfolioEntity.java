@@ -1,4 +1,4 @@
-package com.crypto.walletmanager.portfolio;
+package com.crypto.walletmanager.dataprovider.portfolio;
 
 import java.util.UUID;
 

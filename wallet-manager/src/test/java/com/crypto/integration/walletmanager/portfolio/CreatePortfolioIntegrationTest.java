@@ -1,9 +1,9 @@
 package com.crypto.integration.walletmanager.portfolio;
 
-import com.crypto.walletmanager.portfolio.CreatePortfolio;
-import com.crypto.walletmanager.portfolio.Portfolio;
-import com.crypto.walletmanager.portfolio.PortfolioDAOImp;
-import com.crypto.walletmanager.portfolio.PortfolioDataProviderInMemory;
+import com.crypto.walletmanager.business.portfolio.CreatePortfolio;
+import com.crypto.walletmanager.business.portfolio.Portfolio;
+import com.crypto.walletmanager.dataprovider.portfolio.PortfolioDAOImp;
+import com.crypto.walletmanager.dataprovider.portfolio.PortfolioDataProviderInMemory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

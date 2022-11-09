@@ -27,9 +27,16 @@
 	</modules>
 
 	<dependencies>
+
+		<!--spring dependencies-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
 		<dependency>
@@ -44,11 +51,20 @@
 			<version>5.2.0</version>
 			<scope>test</scope>
 		</dependency>
+
+		<!--third-party dependencies-->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>31.1-jre</version>
 		</dependency>
+
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+			<version>1.9.5</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

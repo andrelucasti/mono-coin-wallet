@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+  prometheus:
+    container_name: coin_wallet_prometheus
+    image: prom/prometheus:v2.40.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - type: bind
+        source: ./prometheus.yml
+        target: /etc/prometheus/prometheus.yml
+    networks:
+      - monitoring
+
+  grafana:
+      container_name: grafana
+      image: grafana/grafana-oss:latest
+      ports:
+          - "3000:3000"
+      environment:
+          - "GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource"
+      networks:
+        - monitoring
+
+networks:
+  monitoring:
+    name: "coin_wallet_monitoring"

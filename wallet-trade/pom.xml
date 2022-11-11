@@ -15,5 +15,10 @@
         <java.version>17</java.version>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>com.crypto</groupId>
+            <artifactId>wallet-manager</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>

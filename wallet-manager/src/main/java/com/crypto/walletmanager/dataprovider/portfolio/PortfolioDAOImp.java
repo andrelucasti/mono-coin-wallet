@@ -5,6 +5,7 @@ import com.crypto.walletmanager.business.portfolio.PortfolioDAO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -37,5 +38,11 @@ public class PortfolioDAOImp implements PortfolioDAO {
             .stream()
             .map(portfolioEntity -> new Portfolio(portfolioEntity.name(), portfolioEntity.userId(), portfolioEntity.id()))
             .toList();
+    }
+
+    @Override
+    public Optional<Portfolio> findById(UUID id) {
+        return portfolioDataProvider.findById(id)
+                .map(portfolioEntity -> new Portfolio(portfolioEntity.name(), portfolioEntity.userId(), portfolioEntity.id()));
     }
 }

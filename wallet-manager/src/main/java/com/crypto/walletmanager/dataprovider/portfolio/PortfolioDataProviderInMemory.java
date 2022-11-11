@@ -36,6 +36,6 @@ public class PortfolioDataProviderInMemory implements PortfolioDataProvider {
 
     @Override
     public void save(PortfolioEntity portfolio) {
-        this.memory.put(UUID.randomUUID(), portfolio);
+        this.memory.put(portfolio.id(), portfolio);
     }
 }

@@ -43,6 +43,6 @@ public class PortfolioDAOImp implements PortfolioDAO {
     @Override
     public Optional<Portfolio> findById(UUID id) {
         return portfolioDataProvider.findById(id)
-                .map(portfolioEntity -> new Portfolio(portfolioEntity.name(), portfolioEntity.userId(), portfolioEntity.id()));
+                .map(portfolioEntity -> new Portfolio(portfolioEntity.name(), portfolioEntity.userId()));
     }
 }

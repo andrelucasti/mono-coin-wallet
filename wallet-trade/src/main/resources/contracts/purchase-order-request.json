@@ -1,0 +1,7 @@
+{
+    "portfolioId": "{portfolioId}",
+    "coinSymbol":"{coinSymbol}",
+    "quantity":"{quantity}",
+    "fee":"{fee}",
+    "purchaseOrderDate":"{purchaseOrderDate}"
+}

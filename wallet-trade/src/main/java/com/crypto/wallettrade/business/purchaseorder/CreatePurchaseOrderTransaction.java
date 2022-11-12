@@ -5,7 +5,9 @@ import com.crypto.wallettrade.business.coin.CoinIntegrator;
 import com.crypto.wallettrade.business.coin.CoinNotFoundException;
 import com.crypto.wallettrade.business.wallet.PortfolioNotFoundException;
 import com.crypto.wallettrade.dataprovider.DAO;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CreatePurchaseOrderTransaction {
 
     private final DAO<PurchaseOrderTransaction> purchaseOrderTransactionDAO;

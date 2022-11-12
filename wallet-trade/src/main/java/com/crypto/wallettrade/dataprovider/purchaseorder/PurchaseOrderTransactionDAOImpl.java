@@ -5,12 +5,14 @@ import com.crypto.wallettrade.business.coin.CurrencyType;
 import com.crypto.wallettrade.business.purchaseorder.PurchaseOrder;
 import com.crypto.wallettrade.business.purchaseorder.PurchaseOrderTransaction;
 import com.crypto.wallettrade.dataprovider.DAO;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
+@Repository
 public class PurchaseOrderTransactionDAOImpl implements DAO<PurchaseOrderTransaction> {
 
     private final PurchaseOrderTransactionEntityData purchaseOrderTransactionEntityData;

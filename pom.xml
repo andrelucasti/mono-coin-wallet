@@ -23,7 +23,7 @@
 	<modules>
 		<module>app</module>
 		<module>wallet-manager</module>
-		<module>wallet-trade</module>
+		<module>wallet-transaction</module>
 	</modules>
 
 	<dependencies>

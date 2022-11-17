@@ -20,7 +20,7 @@
 
         <dependency>
             <groupId>com.crypto</groupId>
-            <artifactId>wallet-trade</artifactId>
+            <artifactId>wallet-transaction</artifactId>
             <version>1.0</version>
         </dependency>
 

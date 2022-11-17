@@ -39,3 +39,15 @@ infra-podman-local-start: ## Run infrastructure locally
 
 infra-podman-local-stop: ## Stop infrastructure locally
 	podman-compose -f infrastructure/monitoring/docker-compose.yml down
+
+db-docker-local-start: ## Run database locally
+	docker-compose -f infrastructure/databases/docker-compose.yml up -d --build
+
+db-docker-local-stop: ## Stop database locally
+	docker-compose -f infrastructure/databases/docker-compose.yml down
+
+db-podman-local-start: ## Run database locally
+	podman-compose -f infrastructure/databases/docker-compose.yml up -d --build
+
+db-podman-local-stop: ## Stop database locally
+	podman-compose -f infrastructure/databases/docker-compose.yml down

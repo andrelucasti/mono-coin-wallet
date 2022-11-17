@@ -1,0 +1,25 @@
+version: '3.9'
+services:
+  postgres-wallet-manager:
+    container_name: postgres-wallet-manager
+    image: postgres:15.1
+    ports:
+      - "54321:5432"
+    environment:
+      - POSTGRES_USER=wallet-manager
+      - POSTGRES_PASSWORD=wallet-manager
+      - POSTGRES_DB=wallet-manager
+    volumes:
+      - postgres_wallet-manager:/var/lib/postgresql/data
+
+  postgres-wallet-transaction:
+    container_name: postgres-wallet-transaction
+    image: postgres:15.1
+    ports:
+      - "54322:5432"
+    environment:
+      - POSTGRES_USER=wallet-transaction
+      - POSTGRES_PASSWORD=wallet-transaction
+      - POSTGRES_DB=wallet-transaction
+    volumes:
+      - postgres_wallet-transaction:/var/lib/postgresql/data

@@ -2,6 +2,7 @@ package com.crypto.walletmanager.dataprovider.portfolio;
 
 import com.crypto.walletmanager.business.portfolio.Portfolio;
 import com.crypto.walletmanager.business.portfolio.PortfolioDAO;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class PortfolioDAOImp implements PortfolioDAO {
     private final PortfolioDataProvider portfolioDataProvider;
     private final PortfolioConverter portfolioConverter;
 
-    public PortfolioDAOImp(PortfolioDataProvider portfolioDataProvider,
+    public PortfolioDAOImp(@Qualifier("portfolioDataProviderInMemory") PortfolioDataProvider portfolioDataProvider,
                            PortfolioConverter portfolioConverter) {
         this.portfolioDataProvider = portfolioDataProvider;
         this.portfolioConverter = portfolioConverter;
@@ -26,7 +27,7 @@ public class PortfolioDAOImp implements PortfolioDAO {
 
         return portfolioEntityList
                     .stream()
-                    .map(portfolioConverter::from)
+                    .map(portfolioConverter::fromModelToEntity)
                 .toList();
     }
 
@@ -39,13 +40,13 @@ public class PortfolioDAOImp implements PortfolioDAO {
     public List<Portfolio> findBy(UUID userId) {
         return portfolioDataProvider.findBy(userId)
                 .stream()
-                .map(portfolioConverter::from)
+                .map(portfolioConverter::fromModelToEntity)
                 .toList();
     }
 
     @Override
     public Optional<Portfolio> findById(UUID id) {
         return portfolioDataProvider.findById(id)
-                .map(portfolioConverter::from);
+                .map(portfolioConverter::fromModelToEntity);
     }
 }

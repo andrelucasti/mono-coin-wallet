@@ -8,9 +8,9 @@
         <version>1.0</version>
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
-    <artifactId>wallet-trade</artifactId>
-    <name>wallet-trade</name>
-    <description>Wallet Trade</description>
+    <artifactId>wallet-transaction</artifactId>
+    <name>wallet-transaction</name>
+    <description>Wallet Transaction</description>
     <properties>
         <java.version>17</java.version>
     </properties>

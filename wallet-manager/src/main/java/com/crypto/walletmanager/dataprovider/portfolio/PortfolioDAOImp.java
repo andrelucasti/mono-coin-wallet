@@ -12,9 +12,12 @@ import java.util.UUID;
 public class PortfolioDAOImp implements PortfolioDAO {
 
     private final PortfolioDataProvider portfolioDataProvider;
+    private final PortfolioConverter portfolioConverter;
 
-    public PortfolioDAOImp(PortfolioDataProvider portfolioDataProvider) {
+    public PortfolioDAOImp(PortfolioDataProvider portfolioDataProvider,
+                           PortfolioConverter portfolioConverter) {
         this.portfolioDataProvider = portfolioDataProvider;
+        this.portfolioConverter = portfolioConverter;
     }
 
     @Override
@@ -23,7 +26,7 @@ public class PortfolioDAOImp implements PortfolioDAO {
 
         return portfolioEntityList
                     .stream()
-                    .map(portfolioEntity -> new Portfolio(portfolioEntity.name(), portfolioEntity.userId(), portfolioEntity.id()))
+                    .map(portfolioConverter::from)
                 .toList();
     }
 
@@ -35,14 +38,14 @@ public class PortfolioDAOImp implements PortfolioDAO {
     @Override
     public List<Portfolio> findBy(UUID userId) {
         return portfolioDataProvider.findBy(userId)
-            .stream()
-            .map(portfolioEntity -> new Portfolio(portfolioEntity.name(), portfolioEntity.userId(), portfolioEntity.id()))
-            .toList();
+                .stream()
+                .map(portfolioConverter::from)
+                .toList();
     }
 
     @Override
     public Optional<Portfolio> findById(UUID id) {
         return portfolioDataProvider.findById(id)
-                .map(portfolioEntity -> new Portfolio(portfolioEntity.name(), portfolioEntity.userId()));
+                .map(portfolioConverter::from);
     }
 }

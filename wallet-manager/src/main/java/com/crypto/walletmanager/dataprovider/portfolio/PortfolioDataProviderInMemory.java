@@ -2,7 +2,6 @@ package com.crypto.walletmanager.dataprovider.portfolio;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,7 @@ public class PortfolioDataProviderInMemory implements PortfolioDataProvider {
     @Override
     public List<PortfolioEntity> findBy(UUID userId) {
        return this.memory.values().stream()
-                    .filter(portfolioEntity -> portfolioEntity.userId().equals(userId))
+                    .filter(portfolioEntity -> portfolioEntity.getUserId().equals(userId))
                     .toList();
     }
 
@@ -36,6 +35,6 @@ public class PortfolioDataProviderInMemory implements PortfolioDataProvider {
 
     @Override
     public void save(PortfolioEntity portfolio) {
-        this.memory.put(portfolio.id(), portfolio);
+        this.memory.put(portfolio.getId(), portfolio);
     }
 }

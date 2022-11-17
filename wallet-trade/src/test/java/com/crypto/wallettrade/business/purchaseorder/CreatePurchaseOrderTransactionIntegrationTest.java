@@ -2,6 +2,7 @@ package com.crypto.wallettrade.business.purchaseorder;
 
 import com.crypto.walletmanager.business.portfolio.Portfolio;
 import com.crypto.walletmanager.business.portfolio.PortfolioDAO;
+import com.crypto.walletmanager.dataprovider.portfolio.PortfolioConverter;
 import com.crypto.walletmanager.dataprovider.portfolio.PortfolioDAOImp;
 import com.crypto.walletmanager.dataprovider.portfolio.PortfolioDataProviderInMemory;
 import com.crypto.wallettrade.business.coin.Coin;
@@ -42,7 +43,7 @@ class CreatePurchaseOrderTransactionIntegrationTest {
     @BeforeEach
     void setUp() {
         purchaseOrderTransactionDAO = new PurchaseOrderTransactionDAOImpl(new PurchaseOrderTransactionEntityDataInMemory());
-        portfolioDAO = new PortfolioDAOImp(new PortfolioDataProviderInMemory());
+        portfolioDAO = new PortfolioDAOImp(new PortfolioDataProviderInMemory(), new PortfolioConverter());
         createPurchaseOrderTransaction = new CreatePurchaseOrderTransaction(purchaseOrderTransactionDAO, portfolioDAO, coinIntegrator);
     }
 

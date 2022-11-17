@@ -1,1 +1,10 @@
-
+spring:
+    datasource:
+        hikari:
+            connection-test-query: select 1=1
+            jdbcUrl: jdbc:postgresql://localhost:5432/wallet-manager
+            username: wallet-manager
+            password: wallet-manager
+            data-source-class-name: com.impossibl.postgres.jdbc.PGDataSource
+    jpa:
+        database-platform: org.hibernate.dialect.PostgreSQLDialect

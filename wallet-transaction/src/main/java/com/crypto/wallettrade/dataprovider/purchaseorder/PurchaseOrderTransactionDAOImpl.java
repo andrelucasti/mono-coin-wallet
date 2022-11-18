@@ -5,9 +5,9 @@ import com.crypto.wallettrade.business.coin.CurrencyType;
 import com.crypto.wallettrade.business.purchaseorder.PurchaseOrder;
 import com.crypto.wallettrade.business.purchaseorder.PurchaseOrderTransaction;
 import com.crypto.wallettrade.dataprovider.DAO;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +17,7 @@ public class PurchaseOrderTransactionDAOImpl implements DAO<PurchaseOrderTransac
 
     private final PurchaseOrderTransactionEntityData purchaseOrderTransactionEntityData;
 
-    public PurchaseOrderTransactionDAOImpl(PurchaseOrderTransactionEntityData purchaseOrderTransactionEntityData) {
+    public PurchaseOrderTransactionDAOImpl(@Qualifier("purchaseOrderTransactionEntityPhysicalDatabase") PurchaseOrderTransactionEntityData purchaseOrderTransactionEntityData) {
         this.purchaseOrderTransactionEntityData = purchaseOrderTransactionEntityData;
     }
 

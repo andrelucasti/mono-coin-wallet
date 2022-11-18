@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 @Configuration
@@ -26,11 +25,11 @@ public class DataSourceConfiguration {
     @Primary
     @Bean
     DataSource dataSource() throws IOException {
-        Properties properties = new Properties();
-        InputStream inputStream = Resources.getResource("application-wallet-manager.properties").openStream();
+        var properties = new Properties();
+        var inputStream = Resources.getResource("application-wallet-manager.properties").openStream();
         properties.load(inputStream);
 
-        HikariDataSource hikariDataSource = DataSourceBuilder.create()
+        var hikariDataSource = DataSourceBuilder.create()
                 .url(properties.getProperty("spring.datasource.jdbc-url"))
                 .driverClassName(properties.getProperty("spring.datasource.driver-class-name"))
                 .username(properties.getProperty("spring.datasource.username"))

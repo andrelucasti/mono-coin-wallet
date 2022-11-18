@@ -1,17 +1,42 @@
 package com.crypto.wallettrade.dataprovider.purchaseorder;
 
+import com.vladmihalcea.hibernate.type.json.JsonStringType;
+import lombok.Getter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.ZonedDateTime;
 import java.util.Map;
 import java.util.UUID;
 
+@Entity
+@Table(name = "PURCHASE_ORDER_TRANSACTION")
+@TypeDefs({
+        @TypeDef(name = "json", typeClass = JsonStringType.class)
+})
+@Getter
 public class PurchaseOrderTransactionEntity {
+    public PurchaseOrderTransactionEntity() {}
 
+    @Id
     private UUID id;
+    @Column(name = "PORTFOLIO_ID", nullable = false)
     private UUID portfolioId;
+    @Column(name = "COIN_SYMBOL", nullable = false)
     private String coinSymbol;
+    @Column(name = "QUANTITY")
     private double quantity;
+    @Column(name = "FEE")
     private double fee;
+    @Column(name = "COIN_ATTRIBUTES", nullable = false)
+    @Type(type = "json")
     private Map<String, String> coinAttributes;
+    @Column(name = "ORDER_DATE", nullable = false)
     private ZonedDateTime purchaseOrderDate;
 
     public PurchaseOrderTransactionEntity(UUID portfolioId,
@@ -27,33 +52,5 @@ public class PurchaseOrderTransactionEntity {
         this.fee = fee;
         this.coinAttributes = coinAttributes;
         this.purchaseOrderDate = purchaseOrderDate;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public UUID getPortfolioId() {
-        return portfolioId;
-    }
-
-    public String getCoinSymbol() {
-        return coinSymbol;
-    }
-
-    public double getQuantity() {
-        return quantity;
-    }
-
-    public double getFee() {
-        return fee;
-    }
-
-    public Map<String, String> getCoinAttributes() {
-        return coinAttributes;
-    }
-
-    public ZonedDateTime getPurchaseOrderDate() {
-        return purchaseOrderDate;
     }
 }

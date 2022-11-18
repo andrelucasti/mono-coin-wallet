@@ -15,7 +15,7 @@ public class PortfolioDAOImp implements PortfolioDAO {
     private final PortfolioDataProvider portfolioDataProvider;
     private final PortfolioConverter portfolioConverter;
 
-    public PortfolioDAOImp(@Qualifier("portfolioDataProviderInMemory") PortfolioDataProvider portfolioDataProvider,
+    public PortfolioDAOImp(@Qualifier("portfolioDataProviderInPhysicalDatabase") PortfolioDataProvider portfolioDataProvider,
                            PortfolioConverter portfolioConverter) {
         this.portfolioDataProvider = portfolioDataProvider;
         this.portfolioConverter = portfolioConverter;

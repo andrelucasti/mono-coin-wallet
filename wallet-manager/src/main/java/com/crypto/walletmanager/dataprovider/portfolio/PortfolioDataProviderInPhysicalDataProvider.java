@@ -1,6 +1,7 @@
 package com.crypto.walletmanager.dataprovider.portfolio;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,11 +9,11 @@ import java.util.UUID;
 import java.util.stream.StreamSupport;
 
 @Repository
-public class PortfolioDataProviderInPhysicalDatabase implements PortfolioDataProvider {
+@Transactional(transactionManager = "walletManagerTransaction")
+public class PortfolioDataProviderInPhysicalDataProvider implements PortfolioDataProvider {
 
     private final PortfolioDAOEntity portfolioDAOEntity;
-
-    public PortfolioDataProviderInPhysicalDatabase(PortfolioDAOEntity portfolioDAOEntity) {
+    public PortfolioDataProviderInPhysicalDataProvider(PortfolioDAOEntity portfolioDAOEntity) {
         this.portfolioDAOEntity = portfolioDAOEntity;
     }
 

@@ -10,8 +10,7 @@ import com.crypto.wallettransaction.business.coin.CoinIntegrator;
 import com.crypto.wallettransaction.business.coin.CoinNotFoundException;
 import com.crypto.wallettransaction.business.coin.CurrencyType;
 import com.crypto.wallettransaction.business.wallet.PortfolioNotFoundException;
-import com.crypto.wallettransaction.business.Repository;
-import com.crypto.wallettransaction.dataprovider.purchaseorder.PurchaseOrderTransactionRepositoryImpl;
+import com.crypto.wallettransaction.dataprovider.purchaseorder.PurchaseOrderTransactionTransactionRepositoryImpl;
 import com.crypto.wallettransaction.dataprovider.purchaseorder.PurchaseOrderTransactionEntityDataProviderInMemory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +33,7 @@ class CreatePurchaseOrderTransactionIntegrationTest {
     private CreatePurchaseOrderTransaction createPurchaseOrderTransaction;
 
     private PortfolioRepository portfolioRepository;
-    private PurchaseOrderRepository purchaseOrderTransactionRepository;
+    private PurchaseOrderTransactionRepository purchaseOrderTransactionRepository;
 
     @Mock
     private CoinIntegrator coinIntegrator;
@@ -42,7 +41,7 @@ class CreatePurchaseOrderTransactionIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        purchaseOrderTransactionRepository = new PurchaseOrderTransactionRepositoryImpl(new PurchaseOrderTransactionEntityDataProviderInMemory());
+        purchaseOrderTransactionRepository = new PurchaseOrderTransactionTransactionRepositoryImpl(new PurchaseOrderTransactionEntityDataProviderInMemory());
         portfolioRepository = new PortfolioRepositoryImp(new PortfolioDataProviderInMemory(), new PortfolioConverter());
         createPurchaseOrderTransaction = new CreatePurchaseOrderTransaction(purchaseOrderTransactionRepository, portfolioRepository, coinIntegrator);
     }

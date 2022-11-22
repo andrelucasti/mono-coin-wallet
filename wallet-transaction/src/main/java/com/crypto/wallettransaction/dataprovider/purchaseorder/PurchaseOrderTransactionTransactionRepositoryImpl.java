@@ -3,20 +3,21 @@ package com.crypto.wallettransaction.dataprovider.purchaseorder;
 import com.crypto.wallettransaction.business.coin.Coin;
 import com.crypto.wallettransaction.business.coin.CurrencyType;
 import com.crypto.wallettransaction.business.purchaseorder.PurchaseOrder;
-import com.crypto.wallettransaction.business.purchaseorder.PurchaseOrderRepository;
+import com.crypto.wallettransaction.business.purchaseorder.PurchaseOrderTransactionRepository;
 import com.crypto.wallettransaction.business.purchaseorder.PurchaseOrderTransaction;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
 
 
-@org.springframework.stereotype.Repository
-public class PurchaseOrderTransactionRepositoryImpl implements PurchaseOrderRepository {
+@Repository
+public class PurchaseOrderTransactionTransactionRepositoryImpl implements PurchaseOrderTransactionRepository {
 
     private final PurchaseOrderTransactionEntityDataProvider purchaseOrderTransactionEntityDataProvider;
 
-    public PurchaseOrderTransactionRepositoryImpl(@Qualifier("purchaseOrderTransactionEntityPhysicalDatabaseProvider") PurchaseOrderTransactionEntityDataProvider purchaseOrderTransactionEntityDataProvider) {
+    public PurchaseOrderTransactionTransactionRepositoryImpl(@Qualifier("purchaseOrderTransactionEntityPhysicalDataProviderProvider") PurchaseOrderTransactionEntityDataProvider purchaseOrderTransactionEntityDataProvider) {
         this.purchaseOrderTransactionEntityDataProvider = purchaseOrderTransactionEntityDataProvider;
     }
 

@@ -4,9 +4,7 @@ import com.crypto.AppApplicationTests;
 import com.crypto.walletmanager.business.portfolio.Portfolio;
 import com.crypto.walletmanager.business.portfolio.PortfolioRepository;
 import com.crypto.wallettransaction.business.coin.CurrencyType;
-import com.crypto.wallettransaction.business.purchaseorder.PurchaseOrderRepository;
-import com.crypto.wallettransaction.business.purchaseorder.PurchaseOrderTransaction;
-import com.crypto.wallettransaction.business.Repository;
+import com.crypto.wallettransaction.business.purchaseorder.PurchaseOrderTransactionRepository;
 import com.google.common.io.Resources;
 import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
@@ -28,7 +26,7 @@ public class PurchaseOrderTransactionContractTest extends AppApplicationTests {
     private PortfolioRepository portfolioRepository;
 
     @Autowired
-    private PurchaseOrderRepository purchaseOrderTransactionRepository;
+    private PurchaseOrderTransactionRepository purchaseOrderTransactionRepository;
 
     @Test
     void shouldReturnPortfolioWhenIsSaved() throws IOException {

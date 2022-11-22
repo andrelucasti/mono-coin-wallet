@@ -15,7 +15,7 @@ public class PortfolioRepositoryImp implements PortfolioRepository {
     private final PortfolioDataProvider portfolioDataProvider;
     private final PortfolioConverter portfolioConverter;
 
-    public PortfolioRepositoryImp(@Qualifier("portfolioDataProviderInPhysicalDatabase") PortfolioDataProvider portfolioDataProvider,
+    public PortfolioRepositoryImp(@Qualifier("portfolioDataProviderInPhysicalDataProvider") PortfolioDataProvider portfolioDataProvider,
                                   PortfolioConverter portfolioConverter) {
         this.portfolioDataProvider = portfolioDataProvider;
         this.portfolioConverter = portfolioConverter;

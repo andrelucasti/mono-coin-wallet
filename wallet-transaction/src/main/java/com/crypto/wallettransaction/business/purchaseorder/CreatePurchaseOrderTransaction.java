@@ -4,18 +4,17 @@ import com.crypto.walletmanager.business.portfolio.PortfolioRepository;
 import com.crypto.wallettransaction.business.coin.CoinIntegrator;
 import com.crypto.wallettransaction.business.coin.CoinNotFoundException;
 import com.crypto.wallettransaction.business.wallet.PortfolioNotFoundException;
-import com.crypto.wallettransaction.business.Repository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CreatePurchaseOrderTransaction {
 
-    private final PurchaseOrderRepository purchaseOrderTransactionRepository;
+    private final PurchaseOrderTransactionRepository purchaseOrderTransactionRepository;
     private final PortfolioRepository portfolioRepository;
     private final CoinIntegrator coinIntegrator;
 
 
-    public CreatePurchaseOrderTransaction(PurchaseOrderRepository purchaseOrderTransactionRepository,
+    public CreatePurchaseOrderTransaction(PurchaseOrderTransactionRepository purchaseOrderTransactionRepository,
                                           PortfolioRepository portfolioRepository,
                                           CoinIntegrator coinIntegrator) {
 

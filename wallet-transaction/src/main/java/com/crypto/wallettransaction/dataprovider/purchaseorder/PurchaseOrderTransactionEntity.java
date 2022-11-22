@@ -1,5 +1,7 @@
 package com.crypto.wallettransaction.dataprovider.purchaseorder;
 
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import com.vladmihalcea.hibernate.type.json.JsonNodeBinaryType;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.Getter;
 import org.hibernate.annotations.Type;
@@ -17,7 +19,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "PURCHASE_ORDER_TRANSACTION")
 @TypeDefs({
-        @TypeDef(name = "json", typeClass = JsonStringType.class)
+        @TypeDef(name = "json", typeClass = JsonBinaryType.class)
 })
 @Getter
 public class PurchaseOrderTransactionEntity {

@@ -1,16 +1,18 @@
 package com.crypto.wallettransaction.dataprovider.purchaseorder;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.StreamSupport;
 
 @Repository
-public class PurchaseOrderTransactionEntityPhysicalDatabaseProvider implements PurchaseOrderTransactionEntityDataProvider {
+@Transactional(transactionManager = "walletTransaction")
+public class PurchaseOrderTransactionEntityPhysicalDataProviderProvider implements PurchaseOrderTransactionEntityDataProvider {
 
     private final PurchaseOrderDaoEntity purchaseOrderDaoEntity;
 
-    public PurchaseOrderTransactionEntityPhysicalDatabaseProvider(PurchaseOrderDaoEntity purchaseOrderDaoEntity) {
+    public PurchaseOrderTransactionEntityPhysicalDataProviderProvider(PurchaseOrderDaoEntity purchaseOrderDaoEntity) {
         this.purchaseOrderDaoEntity = purchaseOrderDaoEntity;
     }
 

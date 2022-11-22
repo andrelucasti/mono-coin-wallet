@@ -10,15 +10,15 @@ import java.util.stream.StreamSupport;
 @Repository
 public class PortfolioDataProviderInPhysicalDatabase implements PortfolioDataProvider {
 
-    private final PortfolioEntityRepository portfolioEntityRepository;
+    private final PortfolioDAOEntity portfolioDAOEntity;
 
-    public PortfolioDataProviderInPhysicalDatabase(PortfolioEntityRepository portfolioEntityRepository) {
-        this.portfolioEntityRepository = portfolioEntityRepository;
+    public PortfolioDataProviderInPhysicalDatabase(PortfolioDAOEntity portfolioDAOEntity) {
+        this.portfolioDAOEntity = portfolioDAOEntity;
     }
 
     @Override
     public void save(PortfolioEntity portfolioEntity) {
-        portfolioEntityRepository.save(portfolioEntity);
+        portfolioDAOEntity.save(portfolioEntity);
 
     }
 
@@ -26,7 +26,7 @@ public class PortfolioDataProviderInPhysicalDatabase implements PortfolioDataPro
     public List<PortfolioEntity> findAll() {
 
         return StreamSupport
-                .stream(portfolioEntityRepository
+                .stream(portfolioDAOEntity
                         .findAll()
                         .spliterator(), false)
                 .toList();
@@ -35,7 +35,7 @@ public class PortfolioDataProviderInPhysicalDatabase implements PortfolioDataPro
     @Override
     public List<PortfolioEntity> findBy(UUID userId) {
         return StreamSupport
-                .stream(portfolioEntityRepository
+                .stream(portfolioDAOEntity
                         .findByUserId(userId)
                         .spliterator(), false)
                 .toList();
@@ -43,6 +43,6 @@ public class PortfolioDataProviderInPhysicalDatabase implements PortfolioDataPro
 
     @Override
     public Optional<PortfolioEntity> findById(UUID id) {
-        return portfolioEntityRepository.findById(id);
+        return portfolioDAOEntity.findById(id);
     }
 }

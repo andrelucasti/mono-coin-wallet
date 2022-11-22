@@ -4,13 +4,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CreatePortfolio {
-    private final PortfolioDAO portfolioDAO;
+    private final PortfolioRepository portfolioRepository;
 
-    public CreatePortfolio(PortfolioDAO portfolioDAO) {
-        this.portfolioDAO = portfolioDAO;
+    public CreatePortfolio(PortfolioRepository portfolioRepository) {
+        this.portfolioRepository = portfolioRepository;
     }
 
     public void execute(Portfolio portfolio){
-        portfolioDAO.save(portfolio);
+        portfolioRepository.save(portfolio);
     }
 }

@@ -7,13 +7,13 @@ import java.util.UUID;
 
 @Service
 public class FetchPortfolioByUserId {
-    private final PortfolioDAO portfolioDAO;
+    private final PortfolioRepository portfolioRepository;
 
-    public FetchPortfolioByUserId(PortfolioDAO portfolioDAO) {
-        this.portfolioDAO = portfolioDAO;
+    public FetchPortfolioByUserId(PortfolioRepository portfolioRepository) {
+        this.portfolioRepository = portfolioRepository;
     }
 
     public List<Portfolio> execute(UUID userId){
-        return this.portfolioDAO.findBy(userId);
+        return this.portfolioRepository.findBy(userId);
     }
 }

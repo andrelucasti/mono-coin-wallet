@@ -2,11 +2,11 @@ package com.crypto.contract.wallettrader.purchaseorder;
 
 import com.crypto.AppApplicationTests;
 import com.crypto.walletmanager.business.portfolio.Portfolio;
-import com.crypto.walletmanager.business.portfolio.PortfolioDAO;
-import com.crypto.wallettrade.business.coin.CurrencyType;
-import com.crypto.wallettrade.business.purchaseorder.PurchaseOrderTransaction;
-import com.crypto.wallettrade.dataprovider.DAO;
-import com.crypto.wallettrade.dataprovider.purchaseorder.PurchaseOrderTransactionDAOImpl;
+import com.crypto.walletmanager.business.portfolio.PortfolioRepository;
+import com.crypto.wallettransaction.business.coin.CurrencyType;
+import com.crypto.wallettransaction.business.purchaseorder.PurchaseOrderRepository;
+import com.crypto.wallettransaction.business.purchaseorder.PurchaseOrderTransaction;
+import com.crypto.wallettransaction.business.Repository;
 import com.google.common.io.Resources;
 import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
@@ -25,18 +25,18 @@ import java.util.UUID;
 public class PurchaseOrderTransactionContractTest extends AppApplicationTests {
 
     @Autowired
-    private PortfolioDAO portfolioDAO;
+    private PortfolioRepository portfolioRepository;
 
     @Autowired
-    private DAO<PurchaseOrderTransaction> purchaseOrderTransactionDAO;
+    private PurchaseOrderRepository purchaseOrderTransactionRepository;
 
     @Test
     void shouldReturnPortfolioWhenIsSaved() throws IOException {
         var userId = UUID.randomUUID();
 
         var portfolio = new Portfolio("Token Crypto", userId);
-        portfolioDAO.save(portfolio);
-        var portfolioId = portfolioDAO.findAll().stream().findAny().get().id();
+        portfolioRepository.save(portfolio);
+        var portfolioId = portfolioRepository.findAll().stream().findAny().get().id();
 
         var payload = Resources
         .toString(Resources.getResource("contracts/purchase-order-request.json"), StandardCharsets.UTF_8)
@@ -53,7 +53,7 @@ public class PurchaseOrderTransactionContractTest extends AppApplicationTests {
             .then()
             .status(HttpStatus.CREATED);
 
-        var purchaseOrderTransaction = purchaseOrderTransactionDAO.findAll().stream().findFirst().get();
+        var purchaseOrderTransaction = purchaseOrderTransactionRepository.findAll().stream().findFirst().get();
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(portfolioId, purchaseOrderTransaction.purchaseOrder().portfolioId()),

@@ -73,9 +73,10 @@
 		</dependency>
 		<dependency>
 			<groupId>com.vladmihalcea</groupId>
-			<artifactId>hibernate-types-60</artifactId>
-			<version>2.20.0</version>
+			<artifactId>hibernate-types-52</artifactId>
+			<version>2.2.0</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>

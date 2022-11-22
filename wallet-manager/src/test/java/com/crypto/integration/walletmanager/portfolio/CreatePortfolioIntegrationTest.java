@@ -3,7 +3,7 @@ package com.crypto.integration.walletmanager.portfolio;
 import com.crypto.walletmanager.business.portfolio.CreatePortfolio;
 import com.crypto.walletmanager.business.portfolio.Portfolio;
 import com.crypto.walletmanager.dataprovider.portfolio.PortfolioConverter;
-import com.crypto.walletmanager.dataprovider.portfolio.PortfolioDAOImp;
+import com.crypto.walletmanager.dataprovider.portfolio.PortfolioRepositoryImp;
 import com.crypto.walletmanager.dataprovider.portfolio.PortfolioDataProviderInMemory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ class CreatePortfolioIntegrationTest {
         final var portfolio = new Portfolio(portFolioName, userId);
         final var portfolioDataProviderInMemory = new PortfolioDataProviderInMemory();
 
-        final var subject = new CreatePortfolio(new PortfolioDAOImp(portfolioDataProviderInMemory, new PortfolioConverter()));
+        final var subject = new CreatePortfolio(new PortfolioRepositoryImp(portfolioDataProviderInMemory, new PortfolioConverter()));
         subject.execute(portfolio);
 
         final var portfolioList = portfolioDataProviderInMemory.findAll();

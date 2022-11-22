@@ -2,7 +2,7 @@ package com.crypto.contract.walletmanager.portfolio;
 
 import com.crypto.AppApplicationTests;
 import com.crypto.walletmanager.business.portfolio.Portfolio;
-import com.crypto.walletmanager.business.portfolio.PortfolioDAO;
+import com.crypto.walletmanager.business.portfolio.PortfolioRepository;
 import com.google.common.io.Resources;
 import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
@@ -19,7 +19,7 @@ import java.util.UUID;
 class PortfolioControllerContractTest extends AppApplicationTests {
 
     @Autowired
-    private PortfolioDAO portfolioDAO;
+    private PortfolioRepository portfolioRepository;
 
     @Test
     void shouldReturnPortfolioWhenIsSaved() throws IOException {
@@ -35,7 +35,7 @@ class PortfolioControllerContractTest extends AppApplicationTests {
                 .then()
                 .status(HttpStatus.CREATED);
 
-        var portfolioList = portfolioDAO.findAll();
+        var portfolioList = portfolioRepository.findAll();
         
         Assertions.assertThat(portfolioList).isNotEmpty();
         Assertions.assertThat(portfolioList).hasSize(1);
@@ -46,7 +46,7 @@ class PortfolioControllerContractTest extends AppApplicationTests {
     void shouldReturnPortfolioByWalletId() throws IOException {
         var userId = UUID.randomUUID();
         var portFolioName = "My Token Game";
-        portfolioDAO.save(new Portfolio(portFolioName, userId));
+        portfolioRepository.save(new Portfolio(portFolioName, userId));
 
         MockHttpServletResponse mockHttpServletResponse = RestAssuredMockMvc.given()
             .header("userId", userId)

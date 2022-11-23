@@ -27,7 +27,7 @@ import java.util.Properties;
 )
 public class WalletTransactionDataSourceConfiguration {
     
-    @Bean(name = "transactionDataSource")
+    @Bean(name = "walletTransactionDataSource")
     DataSource dataSource() throws IOException {
         var properties = new Properties();
         var inputStream = Resources.getResource("application-wallet-transaction.properties").openStream();
@@ -47,7 +47,7 @@ public class WalletTransactionDataSourceConfiguration {
     }
 
     @Bean(name = "walletTransactionEntity")
-    public LocalContainerEntityManagerFactoryBean walletTransactionEntity(@Qualifier("transactionDataSource") DataSource dataSource){
+    public LocalContainerEntityManagerFactoryBean walletTransactionEntity(@Qualifier("walletTransactionDataSource") DataSource dataSource){
         final var vendorAdapter = new HibernateJpaVendorAdapter();
         final var localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         localContainerEntityManagerFactoryBean.setDataSource(dataSource);
@@ -66,7 +66,7 @@ public class WalletTransactionDataSourceConfiguration {
     }
 
     @Bean(name = "transactionFlyway")
-    public Flyway flyway(@Qualifier("transactionDataSource") final DataSource dataSource){
+    public Flyway flyway(@Qualifier("walletTransactionDataSource") final DataSource dataSource){
         final var configuration = new ClassicConfiguration();
         configuration.setDataSource(dataSource);
         configuration.setLocations(new Location("classpath:flyway_transaction_manager"));

@@ -4,6 +4,7 @@ import com.crypto.walletmanager.business.portfolio.PortfolioRepository;
 import com.crypto.wallettransaction.business.coin.CoinIntegrator;
 import com.crypto.wallettransaction.business.coin.CoinNotFoundException;
 import com.crypto.wallettransaction.business.wallet.PortfolioNotFoundException;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,10 +14,9 @@ public class CreatePurchaseOrderTransaction {
     private final PortfolioRepository portfolioRepository;
     private final CoinIntegrator coinIntegrator;
 
-
     public CreatePurchaseOrderTransaction(PurchaseOrderTransactionRepository purchaseOrderTransactionRepository,
                                           PortfolioRepository portfolioRepository,
-                                          CoinIntegrator coinIntegrator) {
+                                          @Qualifier("coinIntegrationCoinMarketCap") CoinIntegrator coinIntegrator) {
 
         this.purchaseOrderTransactionRepository = purchaseOrderTransactionRepository;
         this.portfolioRepository = portfolioRepository;

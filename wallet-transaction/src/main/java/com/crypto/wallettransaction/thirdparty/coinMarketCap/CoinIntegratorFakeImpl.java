@@ -1,4 +1,4 @@
-package com.crypto.wallettransaction.thirdparty;
+package com.crypto.wallettransaction.thirdparty.coinMarketCap;
 
 import com.crypto.wallettransaction.business.coin.Coin;
 import com.crypto.wallettransaction.business.coin.CoinIntegrator;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class CoinIntegratorImpl implements CoinIntegrator {
+public class CoinIntegratorFakeImpl implements CoinIntegrator {
 
     @Override
     public Optional<Coin> findBy(String symbol) {

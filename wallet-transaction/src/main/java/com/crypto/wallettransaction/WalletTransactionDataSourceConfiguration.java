@@ -23,7 +23,8 @@ import java.util.Properties;
 @EnableJpaRepositories(
             basePackages = {"com.crypto.wallettransaction.dataprovider"},
             entityManagerFactoryRef = "walletTransactionEntity",
-            transactionManagerRef = "walletTransaction")
+            transactionManagerRef = "walletTransaction"
+)
 public class WalletTransactionDataSourceConfiguration {
     
     @Bean(name = "transactionDataSource")
@@ -45,6 +46,25 @@ public class WalletTransactionDataSourceConfiguration {
         return hikariDataSource;
     }
 
+    @Bean(name = "walletTransactionEntity")
+    public LocalContainerEntityManagerFactoryBean walletTransactionEntity(@Qualifier("transactionDataSource") DataSource dataSource){
+        final var vendorAdapter = new HibernateJpaVendorAdapter();
+        final var localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+        localContainerEntityManagerFactoryBean.setDataSource(dataSource);
+        localContainerEntityManagerFactoryBean.setPackagesToScan("com.crypto.wallettransaction.dataprovider");
+        localContainerEntityManagerFactoryBean.setJpaVendorAdapter(vendorAdapter);
+
+        return localContainerEntityManagerFactoryBean;
+    }
+
+    @Bean("walletTransaction")
+    public TransactionManager walletTransaction(@Qualifier("walletTransactionEntity") LocalContainerEntityManagerFactoryBean entityManagerFactoryBean){
+        final var jpaTransactionManager = new JpaTransactionManager();
+        jpaTransactionManager.setEntityManagerFactory(entityManagerFactoryBean.getObject());
+
+        return jpaTransactionManager;
+    }
+
     @Bean(name = "transactionFlyway")
     public Flyway flyway(@Qualifier("transactionDataSource") final DataSource dataSource){
         final var configuration = new ClassicConfiguration();
@@ -55,25 +75,5 @@ public class WalletTransactionDataSourceConfiguration {
         flyway.migrate();
 
         return flyway;
-    }
-
-    @Bean(name = "walletTransactionEntity")
-    public LocalContainerEntityManagerFactoryBean walletTransactionEntity(@Qualifier("transactionDataSource") DataSource dataSource) throws IOException {
-        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(dataSource);
-        em.setPackagesToScan("com.crypto.wallettransaction.dataprovider");
-        em.setJpaVendorAdapter(vendorAdapter);
-
-        return em;
-    }
-
-
-    @Bean("walletTransaction")
-    public TransactionManager walletTransaction(@Qualifier("walletTransactionEntity") LocalContainerEntityManagerFactoryBean entityManagerFactoryBean){
-        JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
-        jpaTransactionManager.setEntityManagerFactory(entityManagerFactoryBean.getObject());
-
-        return jpaTransactionManager;
     }
 }

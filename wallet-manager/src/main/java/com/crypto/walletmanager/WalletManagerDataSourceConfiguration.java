@@ -31,9 +31,11 @@ public class WalletManagerDataSourceConfiguration {
     @Primary
     @Bean(name = "walletManagerDataSource")
     DataSource dataSource() throws IOException {
-        var properties = fetchProperties();
+        final var properties = new Properties();
+        final var inputStream = Resources.getResource("application-wallet-manager.properties").openStream();
+        properties.load(inputStream);
 
-        var hikariDataSource = DataSourceBuilder.create()
+        final var hikariDataSource = DataSourceBuilder.create()
                 .url(properties.getProperty("spring.datasource.jdbc-url"))
                 .driverClassName(properties.getProperty("spring.datasource.driver-class-name"))
                 .username(properties.getProperty("spring.datasource.username"))
@@ -48,42 +50,34 @@ public class WalletManagerDataSourceConfiguration {
 
     @Primary
     @Bean(name = "walletManagerEntity")
-    public LocalContainerEntityManagerFactoryBean walletManagerEntity(@Qualifier("walletManagerDataSource") DataSource dataSource) throws IOException {
-        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(dataSource);
-        em.setPackagesToScan("com.crypto.walletmanager.dataprovider");
-        em.setJpaVendorAdapter(vendorAdapter);
+    public LocalContainerEntityManagerFactoryBean walletManagerEntity(@Qualifier("walletManagerDataSource") DataSource dataSource){
+        final var vendorAdapter = new HibernateJpaVendorAdapter();
+        final var localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+        localContainerEntityManagerFactoryBean.setDataSource(dataSource);
+        localContainerEntityManagerFactoryBean.setPackagesToScan("com.crypto.walletmanager.dataprovider");
+        localContainerEntityManagerFactoryBean.setJpaVendorAdapter(vendorAdapter);
 
-        return em;
+        return localContainerEntityManagerFactoryBean;
+    }
+
+    @Primary
+    @Bean(name = "walletManagerTransaction")
+    public TransactionManager walletManagerTransaction(@Qualifier("walletManagerEntity") LocalContainerEntityManagerFactoryBean entityManagerFactoryBean){
+        final var jpaTransactionManager = new JpaTransactionManager();
+        jpaTransactionManager.setEntityManagerFactory(entityManagerFactoryBean.getObject());
+
+        return jpaTransactionManager;
     }
 
     @Bean(name = "managerFlyway")
     public Flyway flyway(@Qualifier("walletManagerDataSource") final DataSource dataSource){
         final var configuration = new ClassicConfiguration();
         configuration.setDataSource(dataSource);
-            configuration.setLocations(new Location("classpath:flyway_wallet_manager"));
+        configuration.setLocations(new Location("classpath:flyway_wallet_manager"));
 
-
-        final var flyway = new Flyway(configuration);
+        final Flyway flyway = new Flyway(configuration);
         flyway.migrate();
 
         return flyway;
-    }
-
-    @Primary
-    @Bean(name = "walletManagerTransaction")
-    public TransactionManager walletManagerTransaction(@Qualifier("walletManagerEntity") LocalContainerEntityManagerFactoryBean entityManagerFactoryBean){
-        JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
-        jpaTransactionManager.setEntityManagerFactory(entityManagerFactoryBean.getObject());
-
-        return jpaTransactionManager;
-    }
-
-    private static Properties fetchProperties() throws IOException {
-        var properties = new Properties();
-        var inputStream = Resources.getResource("application-wallet-manager.properties").openStream();
-        properties.load(inputStream);
-        return properties;
     }
 }

@@ -1,0 +1,10 @@
+version: '3.9'
+services:
+  aws-local:
+    container_name: aws-local
+    image: localstack/localstack
+    ports:
+      - "4566:4566"
+      - "8283:8080"
+    environment:
+      - "SERVICES=sqs,sns"

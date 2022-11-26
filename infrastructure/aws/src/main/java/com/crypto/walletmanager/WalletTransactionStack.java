@@ -1,5 +1,6 @@
 package com.crypto.walletmanager;
 
+import com.crypto.walletmanager.ecr.ECRStack;
 import com.crypto.walletmanager.sqs.SQSStack;
 import software.amazon.awscdk.Stack;
 import software.amazon.awscdk.StackProps;
@@ -11,5 +12,8 @@ public class WalletTransactionStack extends Stack {
 
         SQSStack sqsStack = new SQSStack(this);
         sqsStack.execute();
+
+        ECRStack ecrStack = new ECRStack(this);
+        ecrStack.execute();
     }
 }

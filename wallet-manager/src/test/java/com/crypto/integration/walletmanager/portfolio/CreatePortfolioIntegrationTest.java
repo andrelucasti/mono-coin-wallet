@@ -2,24 +2,40 @@ package com.crypto.integration.walletmanager.portfolio;
 
 import com.crypto.walletmanager.business.portfolio.CreatePortfolio;
 import com.crypto.walletmanager.business.portfolio.Portfolio;
+import com.crypto.walletmanager.business.portfolio.PortfolioIntegration;
 import com.crypto.walletmanager.dataprovider.portfolio.PortfolioConverter;
+import com.crypto.walletmanager.dataprovider.portfolio.PortfolioDataProvider;
 import com.crypto.walletmanager.dataprovider.portfolio.PortfolioRepositoryImp;
 import com.crypto.walletmanager.dataprovider.portfolio.PortfolioDataProviderInMemory;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.UUID;
 
+import static org.mockito.Mockito.*;
+
+@ExtendWith(value = MockitoExtension.class)
 class CreatePortfolioIntegrationTest {
+
+    @Mock
+    private PortfolioIntegration portfolioIntegration;
+    private PortfolioDataProvider portfolioDataProviderInMemory;
+    private CreatePortfolio subject;
+    @BeforeEach
+    void setUp() {
+        portfolioDataProviderInMemory = new PortfolioDataProviderInMemory();
+        subject = new CreatePortfolio(new PortfolioRepositoryImp(portfolioDataProviderInMemory, new PortfolioConverter()), portfolioIntegration);
+    }
 
     @Test
     void shouldSaveAndReturnPortfolio() {
         final var portFolioName = "Token Wallet";
         final var userId = UUID.randomUUID();
         final var portfolio = new Portfolio(portFolioName, userId);
-        final var portfolioDataProviderInMemory = new PortfolioDataProviderInMemory();
-
-        final var subject = new CreatePortfolio(new PortfolioRepositoryImp(portfolioDataProviderInMemory, new PortfolioConverter()));
         subject.execute(portfolio);
 
         final var portfolioList = portfolioDataProviderInMemory.findAll();
@@ -30,5 +46,15 @@ class CreatePortfolioIntegrationTest {
                 () -> Assertions.assertEquals(portFolioName, portfolioEntity.getName()),
                 () -> Assertions.assertEquals(userId, portfolioEntity.getUserId())
         );
+    }
+
+    @Test
+    void shouldSendToTopicWhenPortfolioIsSaved() {
+        final var portFolioName = "Token Wallet";
+        final var userId = UUID.randomUUID();
+        final var portfolio = new Portfolio(portFolioName, userId);
+        subject.execute(portfolio);
+
+        verify(portfolioIntegration).send(eq(portfolio));
     }
 }

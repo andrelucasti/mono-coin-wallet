@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: "coin-wallet"
+  profiles:
+    active: local
 
 management:
   endpoints:

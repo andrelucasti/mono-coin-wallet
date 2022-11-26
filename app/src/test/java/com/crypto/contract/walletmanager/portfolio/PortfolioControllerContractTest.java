@@ -1,6 +1,6 @@
 package com.crypto.contract.walletmanager.portfolio;
 
-import com.crypto.AppApplicationTests;
+import com.crypto.contract.AppContractApplicationTests;
 import com.crypto.walletmanager.business.portfolio.Portfolio;
 import com.crypto.walletmanager.business.portfolio.PortfolioRepository;
 import com.google.common.io.Resources;
@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
-class PortfolioControllerContractTest extends AppApplicationTests {
+class PortfolioControllerContractTest extends AppContractApplicationTests {
 
     @Autowired
     private PortfolioRepository portfolioRepository;

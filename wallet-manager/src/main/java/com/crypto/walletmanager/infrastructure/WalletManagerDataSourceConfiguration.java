@@ -1,4 +1,4 @@
-package com.crypto.walletmanager;
+package com.crypto.walletmanager.infrastructure;
 
 import com.google.common.io.Resources;
 import com.zaxxer.hikari.HikariDataSource;
@@ -6,6 +6,7 @@ import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.Location;
 import org.flywaydb.core.api.configuration.ClassicConfiguration;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,12 +28,14 @@ import java.util.Properties;
             transactionManagerRef = "walletManagerTransaction"
 )
 public class WalletManagerDataSourceConfiguration {
+    @Value("${spring.profiles.active}")
+    private String activeProfile;
 
     @Primary
     @Bean(name = "walletManagerDataSource")
     DataSource dataSource() throws IOException {
         final var properties = new Properties();
-        final var inputStream = Resources.getResource("application-wallet-manager.properties").openStream();
+        final var inputStream = Resources.getResource(getFileName()).openStream();
         properties.load(inputStream);
 
         final var hikariDataSource = DataSourceBuilder.create()
@@ -79,5 +82,13 @@ public class WalletManagerDataSourceConfiguration {
         flyway.migrate();
 
         return flyway;
+    }
+
+    private String getFileName() {
+        return "application-wallet-manager"
+                .concat("-")
+                .concat(activeProfile)
+                .concat(".")
+                .concat("properties");
     }
 }

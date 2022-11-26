@@ -1,6 +1,6 @@
 package com.crypto.contract.wallettrader.purchaseorder;
 
-import com.crypto.AppApplicationTests;
+import com.crypto.contract.AppContractApplicationTests;
 import com.crypto.walletmanager.business.portfolio.Portfolio;
 import com.crypto.walletmanager.business.portfolio.PortfolioRepository;
 import com.crypto.wallettransaction.business.coin.CurrencyType;
@@ -20,7 +20,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-public class PurchaseOrderTransactionContractTest extends AppApplicationTests {
+public class PurchaseOrderTransactionContractTest extends AppContractApplicationTests {
 
     @Autowired
     private PortfolioRepository portfolioRepository;

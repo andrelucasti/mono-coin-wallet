@@ -10,4 +10,5 @@ public interface PortfolioRepository {
     List<Portfolio> findBy(UUID userId);
 
     Optional<Portfolio> findById(UUID id);
+    Portfolio findByUserIdAndName(UUID userId, String name);
 }

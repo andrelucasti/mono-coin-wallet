@@ -34,6 +34,15 @@ public class PortfolioDataProviderInMemory implements PortfolioDataProvider {
     }
 
     @Override
+    public PortfolioEntity findByUserIdAndName(UUID userId, String name) {
+        return this.memory.values().stream()
+                .filter(portfolioEntity -> portfolioEntity.getUserId().equals(userId))
+                .filter(portfolioEntity -> portfolioEntity.getName().equals(name))
+                .findAny()
+                .orElseThrow();
+    }
+
+    @Override
     public void save(PortfolioEntity portfolio) {
         this.memory.put(portfolio.getId(), portfolio);
     }

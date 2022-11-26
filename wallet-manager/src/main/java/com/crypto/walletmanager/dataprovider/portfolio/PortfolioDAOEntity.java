@@ -6,5 +6,6 @@ import java.util.UUID;
 
 public interface PortfolioDAOEntity extends CrudRepository<PortfolioEntity, UUID> {
 
+    PortfolioEntity findByUserIdAndName(UUID userId, String name);
     Iterable<PortfolioEntity> findByUserId(UUID userId);
 }

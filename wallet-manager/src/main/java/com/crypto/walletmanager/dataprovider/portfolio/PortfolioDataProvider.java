@@ -12,4 +12,6 @@ public interface PortfolioDataProvider {
     List<PortfolioEntity> findBy(UUID userId);
 
     Optional<PortfolioEntity> findById(UUID id);
+
+    PortfolioEntity findByUserIdAndName(UUID userId, String name);
 }

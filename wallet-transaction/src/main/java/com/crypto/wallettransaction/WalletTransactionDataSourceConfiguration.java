@@ -6,6 +6,7 @@ import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.Location;
 import org.flywaydb.core.api.configuration.ClassicConfiguration;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,11 +27,13 @@ import java.util.Properties;
             transactionManagerRef = "walletTransaction"
 )
 public class WalletTransactionDataSourceConfiguration {
+    @Value("${spring.profiles.active}")
+    private String activeProfile;
     
     @Bean(name = "walletTransactionDataSource")
     DataSource dataSource() throws IOException {
         var properties = new Properties();
-        var inputStream = Resources.getResource("application-wallet-transaction.properties").openStream();
+        var inputStream = Resources.getResource(getFileName()).openStream();
         properties.load(inputStream);
 
         var hikariDataSource = DataSourceBuilder.create()
@@ -75,5 +78,13 @@ public class WalletTransactionDataSourceConfiguration {
         flyway.migrate();
 
         return flyway;
+    }
+
+    private String getFileName() {
+        return "application-wallet-transaction"
+                .concat("-")
+                .concat(activeProfile)
+                .concat(".")
+                .concat("properties");
     }
 }

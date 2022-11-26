@@ -49,4 +49,12 @@ public class PortfolioRepositoryImp implements PortfolioRepository {
         return portfolioDataProvider.findById(id)
                 .map(portfolioConverter::fromModelToEntity);
     }
+
+    @Override
+    public Portfolio findByUserIdAndName(UUID userId, String name) {
+        var portfolioEntity = portfolioDataProvider.findByUserIdAndName(userId, name);
+
+        return portfolioConverter.fromModelToEntity(portfolioEntity);
+    }
+
 }

@@ -46,4 +46,9 @@ public class PortfolioDataProviderInPhysicalDataProvider implements PortfolioDat
     public Optional<PortfolioEntity> findById(UUID id) {
         return portfolioDAOEntity.findById(id);
     }
+
+    @Override
+    public PortfolioEntity findByUserIdAndName(UUID userId, String name) {
+        return portfolioDAOEntity.findByUserIdAndName(userId, name);
+    }
 }

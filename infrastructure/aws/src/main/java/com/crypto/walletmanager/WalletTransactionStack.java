@@ -1,6 +1,7 @@
 package com.crypto.walletmanager;
 
 import com.crypto.walletmanager.ecr.ECRStack;
+import com.crypto.walletmanager.rds.RDSStack;
 import com.crypto.walletmanager.sqs.SQSStack;
 import software.amazon.awscdk.Stack;
 import software.amazon.awscdk.StackProps;
@@ -15,5 +16,8 @@ public class WalletTransactionStack extends Stack {
 
         ECRStack ecrStack = new ECRStack(this);
         ecrStack.execute();
+
+        RDSStack rdsStack = new RDSStack(this);
+        rdsStack.execute();
     }
 }

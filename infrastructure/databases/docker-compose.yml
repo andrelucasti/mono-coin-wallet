@@ -2,7 +2,7 @@ version: '3.9'
 services:
   postgres-wallet-manager:
     container_name: postgres-wallet-manager
-    image: postgres:15.1
+    image: postgres:14
     ports:
       - "54321:5432"
     environment:

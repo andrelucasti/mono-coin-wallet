@@ -18,7 +18,7 @@ public class AwsApp {
 
     public static Environment getEnv(){
         return Environment.builder()
-                .account("000000000000")
+                .account("040335195619")
                 .region("us-east-1")
                 .build();
     }

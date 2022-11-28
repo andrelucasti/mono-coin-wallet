@@ -1,4 +1,4 @@
-package com.crypto.walletmanager.thirdparty.portfolio;
+package com.crypto.walletmanager.app.portfolio;
 
 import com.crypto.walletmanager.business.portfolio.Portfolio;
 import com.crypto.walletmanager.business.portfolio.PortfolioIntegration;

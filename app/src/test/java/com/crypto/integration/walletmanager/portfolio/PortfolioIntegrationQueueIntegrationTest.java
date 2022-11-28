@@ -2,7 +2,7 @@ package com.crypto.integration.walletmanager.portfolio;
 
 import com.crypto.integration.AbstractIntegrationTest;
 import com.crypto.walletmanager.business.portfolio.Portfolio;
-import com.crypto.walletmanager.thirdparty.portfolio.PortfolioIntegrationQueue;
+import com.crypto.walletmanager.app.portfolio.PortfolioIntegrationQueue;
 import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

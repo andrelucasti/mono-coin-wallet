@@ -28,26 +28,27 @@ aws-subscribe: ## create a subscriber between topic and queue $ aws-subscribe to
 aws-receive-message: ## receive msg by queue-url $ aws-receive-message=http://localhost:4566/000000000000/wallet-trade-calculator
 	awslocal sqs receive-message --queue-url $(queue_url)
 
-infra-docker-local-start: ## Run infrastructure locally
+monitoring-docker-local-start: ## Run infrastructure locally
 	docker-compose -f infrastructure/monitoring/docker-compose.yml up -d --build
-
-infra-docker-local-stop: ## Stop infrastructure locally
+monitoring-docker-local-stop: ## Stop infrastructure locally
 	docker-compose -f infrastructure/monitoring/docker-compose.yml down
 
-infra-podman-local-start: ## Run infrastructure locally
+monitoring-podman-local-start: ## Run infrastructure locally
 	podman-compose -f infrastructure/monitoring/docker-compose.yml up -d --build
-
-infra-podman-local-stop: ## Stop infrastructure locally
+monitoring-podman-local-stop: ## Stop infrastructure locally
 	podman-compose -f infrastructure/monitoring/docker-compose.yml down
 
 db-docker-local-start: ## Run database locally
 	docker-compose -f infrastructure/databases/docker-compose.yml up -d --build
-
 db-docker-local-stop: ## Stop database locally
 	docker-compose -f infrastructure/databases/docker-compose.yml down
 
 db-podman-local-start: ## Run database locally
 	podman-compose -f infrastructure/databases/docker-compose.yml up -d --build
-
 db-podman-local-stop: ## Stop database locally
 	podman-compose -f infrastructure/databases/docker-compose.yml down
+
+aws-podman-local-start: ## Run aws localstack locally
+	podman-compose -f infrastructure/aws/docker-compose.yml up -d --build
+aws-podman-local-stop: ## Run aws localstack locally
+	podman-compose -f infrastructure/aws/docker-compose.yml down

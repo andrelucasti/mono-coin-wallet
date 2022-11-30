@@ -12,14 +12,14 @@ import java.util.stream.StreamSupport;
 @Transactional(transactionManager = "walletManagerTransaction")
 public class PortfolioDataProviderInPhysicalDataProvider implements PortfolioDataProvider {
 
-    private final PortfolioDAOEntity portfolioDAOEntity;
-    public PortfolioDataProviderInPhysicalDataProvider(PortfolioDAOEntity portfolioDAOEntity) {
-        this.portfolioDAOEntity = portfolioDAOEntity;
+    private final WalletManagerPortfolioEntityDAO walletManagerPortfolioEntityDAO;
+    public PortfolioDataProviderInPhysicalDataProvider(WalletManagerPortfolioEntityDAO walletManagerPortfolioEntityDAO) {
+        this.walletManagerPortfolioEntityDAO = walletManagerPortfolioEntityDAO;
     }
 
     @Override
     public void save(PortfolioEntity portfolioEntity) {
-        portfolioDAOEntity.save(portfolioEntity);
+        walletManagerPortfolioEntityDAO.save(portfolioEntity);
 
     }
 
@@ -27,7 +27,7 @@ public class PortfolioDataProviderInPhysicalDataProvider implements PortfolioDat
     public List<PortfolioEntity> findAll() {
 
         return StreamSupport
-                .stream(portfolioDAOEntity
+                .stream(walletManagerPortfolioEntityDAO
                         .findAll()
                         .spliterator(), false)
                 .toList();
@@ -36,7 +36,7 @@ public class PortfolioDataProviderInPhysicalDataProvider implements PortfolioDat
     @Override
     public List<PortfolioEntity> findBy(UUID userId) {
         return StreamSupport
-                .stream(portfolioDAOEntity
+                .stream(walletManagerPortfolioEntityDAO
                         .findByUserId(userId)
                         .spliterator(), false)
                 .toList();
@@ -44,11 +44,11 @@ public class PortfolioDataProviderInPhysicalDataProvider implements PortfolioDat
 
     @Override
     public Optional<PortfolioEntity> findById(UUID id) {
-        return portfolioDAOEntity.findById(id);
+        return walletManagerPortfolioEntityDAO.findById(id);
     }
 
     @Override
     public PortfolioEntity findByUserIdAndName(UUID userId, String name) {
-        return portfolioDAOEntity.findByUserIdAndName(userId, name);
+        return walletManagerPortfolioEntityDAO.findByUserIdAndName(userId, name);
     }
 }

@@ -4,7 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.UUID;
 
-public interface PortfolioDAOEntity extends CrudRepository<PortfolioEntity, UUID> {
+public interface WalletManagerPortfolioEntityDAO extends CrudRepository<PortfolioEntity, UUID> {
 
     PortfolioEntity findByUserIdAndName(UUID userId, String name);
     Iterable<PortfolioEntity> findByUserId(UUID userId);

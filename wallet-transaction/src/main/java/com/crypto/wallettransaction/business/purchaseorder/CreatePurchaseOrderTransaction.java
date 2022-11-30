@@ -1,9 +1,9 @@
 package com.crypto.wallettransaction.business.purchaseorder;
 
-import com.crypto.walletmanager.business.portfolio.PortfolioRepository;
+import com.crypto.wallettransaction.business.portfolio.PortfolioRepository;
 import com.crypto.wallettransaction.business.coin.CoinIntegrator;
 import com.crypto.wallettransaction.business.coin.CoinNotFoundException;
-import com.crypto.wallettransaction.business.wallet.PortfolioNotFoundException;
+import com.crypto.wallettransaction.business.portfolio.PortfolioNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 

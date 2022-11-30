@@ -1,17 +1,16 @@
 package com.crypto.wallettransaction.business.purchaseorder;
 
-import com.crypto.walletmanager.business.portfolio.Portfolio;
-import com.crypto.walletmanager.business.portfolio.PortfolioRepository;
-import com.crypto.walletmanager.dataprovider.portfolio.PortfolioConverter;
-import com.crypto.walletmanager.dataprovider.portfolio.PortfolioRepositoryImp;
-import com.crypto.walletmanager.dataprovider.portfolio.PortfolioDataProviderInMemory;
+import com.crypto.wallettransaction.business.portfolio.Portfolio;
 import com.crypto.wallettransaction.business.coin.Coin;
 import com.crypto.wallettransaction.business.coin.CoinIntegrator;
 import com.crypto.wallettransaction.business.coin.CoinNotFoundException;
 import com.crypto.wallettransaction.business.coin.CurrencyType;
-import com.crypto.wallettransaction.business.wallet.PortfolioNotFoundException;
-import com.crypto.wallettransaction.dataprovider.purchaseorder.PurchaseOrderTransactionTransactionRepositoryImpl;
+import com.crypto.wallettransaction.business.portfolio.PortfolioNotFoundException;
+import com.crypto.wallettransaction.business.portfolio.PortfolioRepository;
+import com.crypto.wallettransaction.dataprovider.portfolio.PortfolioDataProviderRepositoryInMemory;
+import com.crypto.wallettransaction.dataprovider.portfolio.PortfolioRepositoryImpl;
 import com.crypto.wallettransaction.dataprovider.purchaseorder.PurchaseOrderTransactionEntityDataProviderInMemory;
+import com.crypto.wallettransaction.dataprovider.purchaseorder.PurchaseOrderTransactionTransactionRepositoryImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +24,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
 class CreatePurchaseOrderTransactionIntegrationTest {
@@ -42,7 +41,7 @@ class CreatePurchaseOrderTransactionIntegrationTest {
     @BeforeEach
     void setUp() {
         purchaseOrderTransactionRepository = new PurchaseOrderTransactionTransactionRepositoryImpl(new PurchaseOrderTransactionEntityDataProviderInMemory());
-        portfolioRepository = new PortfolioRepositoryImp(new PortfolioDataProviderInMemory(), new PortfolioConverter());
+        portfolioRepository = new PortfolioRepositoryImpl(new PortfolioDataProviderRepositoryInMemory());
         createPurchaseOrderTransaction = new CreatePurchaseOrderTransaction(purchaseOrderTransactionRepository, portfolioRepository, coinIntegrator);
     }
 
@@ -57,9 +56,9 @@ class CreatePurchaseOrderTransactionIntegrationTest {
 
     @Test
     void shouldNotCreateAPurchaseOrderWhenCoinDoesNotExists() {
-        var userId = UUID.randomUUID();
+        var id = UUID.randomUUID();
 
-        portfolioRepository.save(new Portfolio("Token Games", userId));
+        portfolioRepository.save(new Portfolio(id,"Token Games"));
         Portfolio portfolio = portfolioRepository.findAll().stream().findAny().get();
 
         var purchaseOrder = new PurchaseOrder(portfolio.id(), "ABC", 1D, 0, ZonedDateTime.now());
@@ -68,14 +67,12 @@ class CreatePurchaseOrderTransactionIntegrationTest {
 
     @Test
     void shouldCreateAPurchaseOrder() throws CoinNotFoundException, PortfolioNotFoundException {
-        var userId = UUID.randomUUID();
+        var id = UUID.randomUUID();
         var coin = new Coin("BTC", "Bitcoin", 17000D, CurrencyType.USD);
 
         Mockito.when(coinIntegrator.findBy(Mockito.eq("BTC"))).thenReturn(Optional.of(coin));
 
-
-
-        portfolioRepository.save(new Portfolio("Token Games", userId));
+        portfolioRepository.save(new Portfolio(id, "Token Games"));
         Portfolio portfolio = portfolioRepository.findAll().stream().findAny().get();
 
         var purchaseOrder = new PurchaseOrder(portfolio.id(), "BTC", 1D, 0, ZonedDateTime.now());

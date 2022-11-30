@@ -3,7 +3,7 @@ package com.crypto.wallettransaction.app.purchaseorder;
 import com.crypto.wallettransaction.business.coin.CoinNotFoundException;
 import com.crypto.wallettransaction.business.purchaseorder.CreatePurchaseOrderTransaction;
 import com.crypto.wallettransaction.business.purchaseorder.PurchaseOrder;
-import com.crypto.wallettransaction.business.wallet.PortfolioNotFoundException;
+import com.crypto.wallettransaction.business.portfolio.PortfolioNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

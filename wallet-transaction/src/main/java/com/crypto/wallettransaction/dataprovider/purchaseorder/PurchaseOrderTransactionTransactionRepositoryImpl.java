@@ -3,13 +3,16 @@ package com.crypto.wallettransaction.dataprovider.purchaseorder;
 import com.crypto.wallettransaction.business.coin.Coin;
 import com.crypto.wallettransaction.business.coin.CurrencyType;
 import com.crypto.wallettransaction.business.purchaseorder.PurchaseOrder;
-import com.crypto.wallettransaction.business.purchaseorder.PurchaseOrderTransactionRepository;
 import com.crypto.wallettransaction.business.purchaseorder.PurchaseOrderTransaction;
+import com.crypto.wallettransaction.business.purchaseorder.PurchaseOrderTransactionRepository;
+import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 
 @Repository
@@ -58,5 +61,10 @@ public class PurchaseOrderTransactionTransactionRepositoryImpl implements Purcha
                                     Double.parseDouble(purchaseOrderTransactionEntity.getCoinAttributes().get("price")),
                                     CurrencyType.valueOf(purchaseOrderTransactionEntity.getCoinAttributes().get("currencyType"))
                 ))).toList();
+    }
+
+    @Override
+    public Optional<PurchaseOrderTransaction> findById(UUID uuid) {
+        throw new NotImplementedException("no implemented yet");
     }
 }

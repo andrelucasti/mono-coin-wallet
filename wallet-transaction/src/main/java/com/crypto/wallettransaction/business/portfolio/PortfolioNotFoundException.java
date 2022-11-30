@@ -1,4 +1,4 @@
-package com.crypto.wallettransaction.business.wallet;
+package com.crypto.wallettransaction.business.portfolio;
 
 public class PortfolioNotFoundException extends Exception {
 

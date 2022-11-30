@@ -24,11 +24,11 @@ public class PortfolioIntegrationQueue implements PortfolioIntegration {
 
     @Override
     public void send(Portfolio portfolio) {
-        Message<Portfolio> portfolioMessage = MessageBuilder
+            Message<Portfolio> portfolioMessage = MessageBuilder
                 .withPayload(portfolio)
                 .build();
 
-        queueMessagingTemplate.send(queueName,  portfolioMessage);
+        queueMessagingTemplate.convertAndSend(queueName, portfolioMessage.getPayload());
     }
 }
 

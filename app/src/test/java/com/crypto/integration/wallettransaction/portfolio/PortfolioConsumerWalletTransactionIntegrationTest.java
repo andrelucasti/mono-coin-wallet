@@ -2,7 +2,6 @@ package com.crypto.integration.wallettransaction.portfolio;
 
 
 import com.crypto.integration.wallettransaction.AbstractWalletTransactionIntegrationTest;
-import com.crypto.wallettransaction.business.portfolio.Portfolio;
 import com.crypto.wallettransaction.business.portfolio.PortfolioRepository;
 import com.google.common.io.Resources;
 import lombok.SneakyThrows;

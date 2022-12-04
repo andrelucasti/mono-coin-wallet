@@ -31,7 +31,6 @@ public class PortfolioConsumer {
         try {
             var portfolioDTO = objectMapper.readValue(message, PortfolioDTO.class);
             portfolioRepository.save(new Portfolio(portfolioDTO.id(), portfolioDTO.name()));
-
         } catch (Throwable e){
             var errorMsg = String.format("got error at consumer portfolioDTO - SenderId: %s - message: %s", senderId, message);
             throw new ConsumerException(errorMsg, e);

@@ -10,5 +10,6 @@ public record Portfolio(String name, UUID userId, UUID id) {
     public Portfolio {
         Objects.requireNonNull(name);
         Objects.requireNonNull(userId);
+
     }
 }

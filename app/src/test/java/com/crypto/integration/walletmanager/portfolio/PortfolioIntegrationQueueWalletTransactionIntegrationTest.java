@@ -1,25 +1,19 @@
 package com.crypto.integration.walletmanager.portfolio;
 
 import com.crypto.integration.walletmanager.AbstractWalletManagerIntegrationTest;
-import com.crypto.integration.wallettransaction.AbstractWalletTransactionIntegrationTest;
-import com.crypto.walletmanager.business.portfolio.Portfolio;
 import com.crypto.walletmanager.app.portfolio.PortfolioIntegrationQueue;
+import com.crypto.walletmanager.business.portfolio.Portfolio;
 import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
+import org.awaitility.Awaitility;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
-import software.amazon.awssdk.auth.credentials.AwsCredentialsProviderChain;
-import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
-import software.amazon.awssdk.regions.Region;
-import software.amazon.awssdk.services.sqs.SqsClient;
-import software.amazon.awssdk.services.sqs.model.ReceiveMessageRequest;
-import software.amazon.awssdk.services.sqs.model.ReceiveMessageResponse;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
+@Disabled
 class PortfolioIntegrationQueueWalletTransactionIntegrationTest extends AbstractWalletManagerIntegrationTest {
     private static final String QUEUE_NAME = "wallet-manager-portfolio-to-wallet-transaction";
 
@@ -29,12 +23,15 @@ class PortfolioIntegrationQueueWalletTransactionIntegrationTest extends Abstract
     @SneakyThrows
     @Test
     void shouldSendToQueuePortfolioAndReturnPortfolio() {
+        var id = UUID.randomUUID();
         var userId = UUID.randomUUID();
-        var portfolio = new Portfolio("NTF", userId);
+        var portfolio = new Portfolio("NTF", userId, id);
 
         portfolioIntegrationQueue.send(portfolio);
 
-        var receiveMessageResponse = receiveMessage(QUEUE_NAME);
-        Assertions.assertThat(receiveMessageResponse.hasMessages()).isTrue();
+        Awaitility.await().atMost(60, TimeUnit.SECONDS).untilAsserted(() ->{
+            var receiveMessageResponse = receiveMessage(QUEUE_NAME);
+            Assertions.assertThat(receiveMessageResponse.hasMessages()).isTrue();
+        });
     }
 }

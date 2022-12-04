@@ -10,8 +10,6 @@ public interface PortfolioDataProvider {
     void save(PortfolioEntity portfolio);
     List<PortfolioEntity> findAll();
     List<PortfolioEntity> findBy(UUID userId);
-
     Optional<PortfolioEntity> findById(UUID id);
-
     PortfolioEntity findByUserIdAndName(UUID userId, String name);
 }

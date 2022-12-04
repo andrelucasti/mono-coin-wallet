@@ -24,8 +24,9 @@ public class PortfolioIntegrationQueue implements PortfolioIntegration {
 
     @Override
     public void send(Portfolio portfolio) {
-            Message<Portfolio> portfolioMessage = MessageBuilder
-                .withPayload(portfolio)
+        var portfolioDTO = new PortfolioDTO(portfolio.id(), portfolio.name(), portfolio.userId());
+        var portfolioMessage = MessageBuilder
+                .withPayload(portfolioDTO)
                 .build();
 
         queueMessagingTemplate.convertAndSend(queueName, portfolioMessage.getPayload());

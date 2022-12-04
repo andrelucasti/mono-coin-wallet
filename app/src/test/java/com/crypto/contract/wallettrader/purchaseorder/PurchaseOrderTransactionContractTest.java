@@ -1,8 +1,8 @@
 package com.crypto.contract.wallettrader.purchaseorder;
 
 import com.crypto.contract.AppContractApplicationTests;
-import com.crypto.walletmanager.business.portfolio.Portfolio;
-import com.crypto.walletmanager.business.portfolio.PortfolioRepository;
+import com.crypto.wallettransaction.business.portfolio.Portfolio;
+import com.crypto.wallettransaction.business.portfolio.PortfolioRepository;
 import com.crypto.wallettransaction.business.coin.CurrencyType;
 import com.crypto.wallettransaction.business.purchaseorder.PurchaseOrderTransactionRepository;
 import com.google.common.io.Resources;
@@ -18,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 public class PurchaseOrderTransactionContractTest extends AppContractApplicationTests {
@@ -30,19 +31,18 @@ public class PurchaseOrderTransactionContractTest extends AppContractApplication
 
     @Test
     void shouldReturnPortfolioWhenIsSaved() throws IOException {
-        var userId = UUID.randomUUID();
+        var id = UUID.randomUUID();
 
-        var portfolio = new Portfolio("Token Crypto", userId);
+        var portfolio = new Portfolio(id,"Token Crypto");
         portfolioRepository.save(portfolio);
-        var portfolioId = portfolioRepository.findAll().stream().findAny().get().id();
 
         var payload = Resources
-        .toString(Resources.getResource("contracts/purchase-order-request.json"), StandardCharsets.UTF_8)
-        .replace("{portfolioId}", portfolioId.toString())
-        .replace("{coinSymbol}", "BTC")
-        .replace("{quantity}", "1")
-        .replace("{fee}", "0")
-        .replace("{purchaseOrderDate}", ZonedDateTime.of(LocalDateTime.of(2013, 1, 10, 12, 15), ZoneId.systemDefault()).toString());
+                .toString(Resources.getResource("contracts/purchase-order-request.json"), StandardCharsets.UTF_8)
+                .replace("{portfolioId}", id.toString())
+                .replace("{coinSymbol}", "BTC")
+                .replace("{quantity}", "1")
+                .replace("{fee}", "0")
+                .replace("{purchaseOrderDate}", ZonedDateTime.of(LocalDateTime.of(2013, 1, 10, 12, 15), ZoneId.systemDefault()).toString());
 
         RestAssuredMockMvc.given()
             .contentType(ContentType.JSON)
@@ -51,10 +51,13 @@ public class PurchaseOrderTransactionContractTest extends AppContractApplication
             .then()
             .status(HttpStatus.CREATED);
 
-        var purchaseOrderTransaction = purchaseOrderTransactionRepository.findAll().stream().findFirst().get();
+        var purchaseOrderTransaction = purchaseOrderTransactionRepository
+                .findAll()
+                .stream()
+                .findFirst().get();
 
         Assertions.assertAll(
-                () -> Assertions.assertEquals(portfolioId, purchaseOrderTransaction.purchaseOrder().portfolioId()),
+                () -> Assertions.assertEquals(id, purchaseOrderTransaction.purchaseOrder().portfolioId()),
                 () -> Assertions.assertEquals("BTC", purchaseOrderTransaction.purchaseOrder().coinSymbol()),
                 () -> Assertions.assertEquals(1, purchaseOrderTransaction.purchaseOrder().quantity()),
                 () -> Assertions.assertEquals(0, purchaseOrderTransaction.purchaseOrder().fee()),

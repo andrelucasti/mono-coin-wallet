@@ -55,6 +55,6 @@ class CreatePortfolioIntegrationTest {
         final var portfolio = new Portfolio(portFolioName, userId);
         subject.execute(portfolio);
 
-        verify(portfolioIntegration).send(eq(portfolio));
+        verify(portfolioIntegration).send(any());
     }
 }

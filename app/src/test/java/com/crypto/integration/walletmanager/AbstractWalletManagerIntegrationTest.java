@@ -11,6 +11,7 @@ import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProviderChain;
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.sns.SnsClient;
 import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.model.ReceiveMessageRequest;
 import software.amazon.awssdk.services.sqs.model.ReceiveMessageResponse;
@@ -38,6 +39,14 @@ public abstract class AbstractWalletManagerIntegrationTest {
 
     protected SqsClient sqsClient() throws URISyntaxException {
         return SqsClient.builder()
+                .region(Region.US_EAST_1)
+                .endpointOverride(new URI("http://localhost:4566"))
+                .credentialsProvider(getAwsCredentialsProvider())
+                .build();
+    }
+
+    protected SnsClient snsClient() throws URISyntaxException {
+        return SnsClient.builder()
                 .region(Region.US_EAST_1)
                 .endpointOverride(new URI("http://localhost:4566"))
                 .credentialsProvider(getAwsCredentialsProvider())

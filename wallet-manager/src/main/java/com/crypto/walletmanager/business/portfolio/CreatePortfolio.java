@@ -1,5 +1,6 @@
 package com.crypto.walletmanager.business.portfolio;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -8,7 +9,7 @@ public class CreatePortfolio {
     private final PortfolioIntegration portfolioIntegration;
 
     public CreatePortfolio(PortfolioRepository portfolioRepository,
-                           PortfolioIntegration portfolioIntegration) {
+                           @Qualifier("portfolioIntegrationTopic") PortfolioIntegration portfolioIntegration) {
         this.portfolioRepository = portfolioRepository;
         this.portfolioIntegration = portfolioIntegration;
     }

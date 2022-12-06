@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import software.amazon.awssdk.services.sqs.model.SendMessageRequest;
 import software.amazon.awssdk.services.sqs.model.SendMessageResponse;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
@@ -20,8 +22,7 @@ class PortfolioConsumerWalletTransactionIntegrationTest extends AbstractWalletTr
     private PortfolioRepository portfolioRepository;
 
     @Test
-    @SneakyThrows
-    void shouldCreatePortfolioWhenReceiveFromQueue(){
+    void shouldCreatePortfolioWhenReceiveFromQueue() throws IOException, URISyntaxException {
         var id = UUID.randomUUID();
         var userId = UUID.randomUUID();
         var name = "Token Wallet";

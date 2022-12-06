@@ -7,6 +7,7 @@ import com.crypto.walletmanager.app.portfolio.PortfolioIntegrationTopic;
 import com.crypto.walletmanager.business.portfolio.Portfolio;
 import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
+import org.awaitility.Awaitility;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,7 @@ import software.amazon.awssdk.services.sqs.model.ReceiveMessageResponse;
 
 import java.net.URISyntaxException;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @PropertySource(value = "classpath:application-wallet-manager.properties")
 class PortfolioIntegrationSendTopicIntegrationTest extends AbstractWalletManagerIntegrationTest {
@@ -27,9 +29,8 @@ class PortfolioIntegrationSendTopicIntegrationTest extends AbstractWalletManager
     @Autowired
     private PortfolioIntegrationTopic portfolioIntegrationTopic;
 
-    @SneakyThrows
     @Test
-    void shouldSendToTopic() {
+    void shouldSendToTopic() throws URISyntaxException {
         var queueName = "wallet-test";
         var subscribeRequest = createSubscribe(topicName, queueName);
 
@@ -39,32 +40,38 @@ class PortfolioIntegrationSendTopicIntegrationTest extends AbstractWalletManager
 
         portfolioIntegrationTopic.send(portfolio);
 
-        var receiveMessageResponse = receiveMessage(subscribeRequest.endpoint());
-
-        Assertions.assertThat(receiveMessageResponse.hasMessages()).isTrue();
+        Awaitility.await().atMost(60, TimeUnit.SECONDS).untilAsserted(() ->{
+            var receiveMessageResponse = receiveMessage(subscribeRequest.endpoint());
+            Assertions.assertThat(receiveMessageResponse.hasMessages()).isTrue();
+        });
     }
     
     private SubscribeRequest createSubscribe(String topicName, String queueName) throws URISyntaxException {
-        var createTopicRequest = CreateTopicRequest.builder()
-                .name(topicName)
-                .build();
-        var snsClient = snsClient();
-        var createTopicResponse = snsClient.createTopic(createTopicRequest);
-
-        var createQueueRequest = CreateQueueRequest.builder()
-                .queueName(queueName)
-                .build();
-        var queueUrl = sqsClient().createQueue(createQueueRequest)
-                .queueUrl();
+        var topicArn = createTopic(topicName);
+        var queueUrl = createQueue(queueName);
 
         var subscribeRequest = SubscribeRequest.builder()
                 .protocol("sqs")
-                .topicArn(createTopicResponse.topicArn())
+                .topicArn(topicArn)
                 .endpoint(queueUrl)
                 .build();
 
-        snsClient.subscribe(subscribeRequest);
+        snsClient().subscribe(subscribeRequest);
 
         return subscribeRequest;
+    }
+
+    private String createQueue(String queueName) throws URISyntaxException {
+        var createQueueRequest = CreateQueueRequest.builder()
+                .queueName(queueName)
+                .build();
+        return sqsClient().createQueue(createQueueRequest).queueUrl();
+    }
+
+    private String createTopic(String topicName) throws URISyntaxException {
+        var createTopicRequest = CreateTopicRequest.builder()
+                .name(topicName)
+                .build();
+        return snsClient().createTopic(createTopicRequest).topicArn();
     }
 }

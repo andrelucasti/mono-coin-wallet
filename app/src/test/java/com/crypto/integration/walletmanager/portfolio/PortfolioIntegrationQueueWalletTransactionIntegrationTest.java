@@ -20,7 +20,6 @@ class PortfolioIntegrationQueueWalletTransactionIntegrationTest extends Abstract
     @Autowired
     private PortfolioIntegrationQueue portfolioIntegrationQueue;
 
-    @SneakyThrows
     @Test
     void shouldSendToQueuePortfolioAndReturnPortfolio() {
         var id = UUID.randomUUID();

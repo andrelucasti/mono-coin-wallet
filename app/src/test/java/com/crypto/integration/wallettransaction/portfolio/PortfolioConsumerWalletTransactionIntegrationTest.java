@@ -8,6 +8,8 @@ import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import software.amazon.awssdk.services.sqs.model.SendMessageRequest;
 import software.amazon.awssdk.services.sqs.model.SendMessageResponse;
 
@@ -16,7 +18,11 @@ import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
+@PropertySource(value = "classpath:application-wallet-transaction.properties")
 class PortfolioConsumerWalletTransactionIntegrationTest extends AbstractWalletTransactionIntegrationTest {
+
+    @Value("${cloud.aws.sqs.from.wallet-manager.queue-name}")
+    private String queueName;
 
     @Autowired
     private PortfolioRepository portfolioRepository;
@@ -31,16 +37,14 @@ class PortfolioConsumerWalletTransactionIntegrationTest extends AbstractWalletTr
                 .replace("{name}", name)
                 .replace("{userId}", userId.toString());
 
-
         SendMessageRequest sendMessageRequest = SendMessageRequest
                 .builder()
-                .queueUrl("wallet-manager-portfolio-to-wallet-transaction")
+                .queueUrl(queueName)
                 .messageBody(payload)
                 .build();
 
         SendMessageResponse sendMessageResponse = sqsClient().sendMessage(sendMessageRequest);
         Assertions.assertThat(sendMessageResponse.sdkHttpResponse().isSuccessful()).isTrue();
-
 
         var portfolioRepositoryAll = portfolioRepository.findAll();
 

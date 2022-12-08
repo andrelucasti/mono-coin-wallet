@@ -4,6 +4,7 @@ import com.crypto.wallettransaction.business.portfolio.Portfolio;
 import com.crypto.wallettransaction.business.portfolio.PortfolioRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,7 @@ public class PortfolioRepositoryImpl implements PortfolioRepository {
     }
 
     @Override
+    @Transactional
     public void save(Portfolio portfolio) {
         portfolioDataProviderRepository.save(new PortfolioEntity(portfolio.id(), portfolio.name()));
     }

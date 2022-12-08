@@ -50,10 +50,10 @@ db-podman-local-stop: ## Stop database locally
 
 aws-podman-local-start: ## Run aws localstack locally
 	podman-compose -f infrastructure/aws/docker-compose.yml up -d --build
-aws-podman-local-stop: ## Run aws localstack locally
+aws-podman-local-stop: ## Stop aws localstack locally
 	podman-compose -f infrastructure/aws/docker-compose.yml down
 
 aws-docker-local-start: ## Run aws localstack locally
 	docker-compose -f infrastructure/aws/docker-compose.yml up -d --build
-aws-docker-local-stop: ## Run aws localstack locally
+aws-docker-local-stop: ## Stop aws localstack locally
 	docker-compose -f infrastructure/aws/docker-compose.yml down

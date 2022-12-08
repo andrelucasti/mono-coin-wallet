@@ -28,9 +28,13 @@ public class PortfolioConsumer {
     @SqsListener(value = {"${cloud.aws.sqs.from.wallet-manager.queue-name}"})
     public void consumer(final String message,
                          @Header("MessageId") final String senderId){
+
         try {
             var portfolioDTO = objectMapper.readValue(message, PortfolioDTO.class);
             portfolioRepository.save(new Portfolio(portfolioDTO.id(), portfolioDTO.name()));
+
+            log.info(String.format("Message received - MessageId: %s QueueName: %s", senderId, "name"));
+
         } catch (Throwable e){
             var errorMsg = String.format("got error at consumer portfolioDTO - SenderId: %s - message: %s", senderId, message);
             throw new ConsumerException(errorMsg, e);

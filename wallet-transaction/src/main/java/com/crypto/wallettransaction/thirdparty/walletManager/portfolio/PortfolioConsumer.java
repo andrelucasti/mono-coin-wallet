@@ -26,12 +26,14 @@ public class PortfolioConsumer {
     }
 
     @SqsListener(value = {"${cloud.aws.sqs.from.wallet-manager.queue-name}"})
-    public void consumer(final String message,
+    public void consumer(final PortfolioDTO message,
                          @Header("MessageId") final String senderId){
 
         try {
-            var portfolioDTO = objectMapper.readValue(message, PortfolioDTO.class);
-            portfolioRepository.save(new Portfolio(portfolioDTO.id(), portfolioDTO.name()));
+            //var portfolioDTO = objectMapper.readValue(message, PortfolioDTO.class);
+            //portfolioRepository.save(new Portfolio(portfolioDTO.id(), portfolioDTO.name()));
+
+            System.out.println(message);
 
             log.info(String.format("Message received - MessageId: %s QueueName: %s", senderId, "name"));
 

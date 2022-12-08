@@ -1,24 +1,32 @@
 package com.crypto;
 
-import com.crypto.walletmanager.WalletTransactionStack;
+import com.crypto.walletmanager.WalletManagerStack;
+import com.crypto.wallettransaction.WalletTransactionStack;
 import software.amazon.awscdk.App;
 import software.amazon.awscdk.Environment;
 import software.amazon.awscdk.StackProps;
 
-import java.util.Objects;
-
 public class AwsApp {
-
     public static void main(final String[] args) {
         App app = new App();
+        Account account = new Account(app);
 
-        String accountId = (String) app.getNode()
-                .tryGetContext("accountId");
-        Objects.requireNonNull(accountId, "accountId must be not null");
+       /* String accountId = account.getAccountId();
+        String region = account.getRegion();*/
 
-        String region = (String) app.getNode()
-                .tryGetContext("region");
-        Objects.requireNonNull(region, "region must be not null");
+
+        String accountId = "000000000000";
+        String region = "us-east-1";
+
+        executeStacks(app, accountId, region);
+
+        app.synth();
+    }
+    private static void executeStacks(App app, String accountId, String region) {
+
+        new WalletManagerStack(app, "wallet-manager-stack",
+                    StackProps.builder().env(getEnv(accountId, region))
+                            .build());
 
         new WalletTransactionStack(app, "wallet-transaction-stack",
                     StackProps.builder().env(getEnv(accountId, region))
